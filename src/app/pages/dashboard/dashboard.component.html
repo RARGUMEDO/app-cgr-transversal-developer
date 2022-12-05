@@ -1,0 +1,46 @@
+
+<div class="row g-5 gx-xxl-8">
+  <div class="col-xxl-12">
+    <div class="card card-xxl-stretch mb-xxl-8">
+      <!-- begin::Header -->
+<div class="card-header border-0 pt-5">
+  <h3 class="card-title align-items-start flex-column">
+    <span class="card-label fw-bolder fs-3 mb-1">Item de Valores</span>
+    <span class="text-muted mt-1 fw-bold fs-7">Registros de item de valores.</span>
+  </h3>
+  <dx-tree-list
+  id="tasks"
+  [dataSource]="itemvalores"
+  keyExpr="item_id"
+  parentIdExpr="itempadre_id"
+  [expandedRowKeys]="[1, 2]"
+  [selectedRowKeys]="[1, 29, 42]"
+  [columnAutoWidth]="true"
+  [wordWrapEnabled]="true"
+  [showBorders]="true"
+>
+
+<dxo-scrolling mode="standard"></dxo-scrolling>
+<dxo-paging [enabled]="true" [pageSize]="6"> </dxo-paging>
+<dxo-pager
+  [showPageSizeSelector]="true"
+  [allowedPageSizes]="[6, 10, 20]"
+  [showInfo]="true"
+>
+</dxo-pager>
+  <dxi-column dataField="itempadre_nombredetalle" caption="NOMBRE DETALLE"  [width]="300"></dxi-column>
+  
+  <dxi-column dataField="itempadre_codigo" caption="CODIGO" [minWidth]="100">
+  </dxi-column>
+  <dxi-column dataField="itempadre_estado" caption="ESTADO" [minWidth]="100">
+  </dxi-column>
+ 
+
+  
+</dx-tree-list>
+
+
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,26 @@
+:host {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+
+table {
+  width: 100%;
+}
+
+::ng-deep .dx-pager .dx-page-sizes .dx-selection, .dx-pager .dx-pages .dx-selection{
+  background-color:#D44339  !important;  
+  color: white;
+}
+::ng-deep .dx-pager .dx-pages .dx-selection{
+  background-color:#D44339 !important;  
+  color: white;
+}
+
+
+::ng-deep .dx-datagrid .dx-datagrid-table .dx-header-row > td {  
+  text-align: center !important;
+}

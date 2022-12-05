@@ -1,0 +1,164 @@
+<div class="row g-5 gx-xxl-8">
+  <div class="col-xxl-12">
+    <div class="card card-xxl-stretch mb-xxl-8">
+      <!-- begin::Header -->
+<div class="card-header border-0 pt-5">
+  <h3 class="card-title align-items-start flex-column">
+    <span class="card-label fw-bolder fs-3 mb-1">Maestro de Ruta</span>
+    <span class="text-muted mt-1 fw-bold fs-7">Aquí se consulta los registros de maestros de rutas.</span>
+  </h3>
+  <div class="card-toolbar">
+    <ul class="nav">
+      
+      <li class="nav-item">
+        <div
+        class="card-toolbar"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        data-bs-trigger="hover"
+        title="Click para agregar nueva ruta"
+        >
+        <button
+          class="btn btn-sm btn-light-primary" (click)="newRegistration()">
+          <span
+            [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
+            class="svg-icon svg-icon-3"
+          ></span>
+          Nuevo Registro
+        </button>
+      </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- end::Header -->
+<!-- begin::Body -->
+<div class="card-body py-3">
+  <div class="tab-content">
+    
+      <div class="row mb-7">
+        <div class="col-lg-3 fv-row">     
+             
+          <select
+          class="form-select form-select-solid form-select-lg fw-bold"
+          name="formtiporuta"
+          [(ngModel)]="selectedValue" >
+          <option value="">Seleccióne tipo...</option>
+          
+          <option *ngFor="let item of comboSelects" [value]="item.value" >  
+            {{item.viewValue}}
+          </option>
+        </select>
+
+        </div>
+
+       <!-- <div class="col-lg-3 fv-row"> 
+          <select
+          class="form-select form-select-solid form-select-lg fw-bold"
+          name="formtiporuta"
+          [(ngModel)]="selectedColValue" >
+          <option value="">Seleccióne columna...</option>
+          
+          <option *ngFor="let item of comboColSelects" [value]="item.value" >  
+            {{item.viewValue}}
+          </option>
+        </select>
+        </div>
+-->
+
+        <div class="col-lg-9 fv-row">     
+          <input
+          formControlName="cardCvv"
+          type="text"
+          class="form-control form-control-solid"
+          minlength="3"
+          maxlength="100"
+          placeholder="Ingrese el campo a buscar"
+          (keyup)="applyFilter($event)"
+        />
+        </div>
+      </div>
+    
+          <dx-data-grid
+          id="gridContainer"
+          [dataSource]="dataSource"
+          [showBorders]="true"
+          [remoteOperations]="true"
+        >
+         <!-- <dxo-search-panel [width]="250" [visible]="true"  placeholder="Ingrese el campo a filtrar"></dxo-search-panel> -->
+          <dxi-column [width]="70" caption="CODIGO" dataField="codigo" dataType="string"> </dxi-column>
+          <dxi-column [width]="166" caption="TIPO" dataField="tipo" dataType="string"> </dxi-column>
+          <dxi-column [width]="140" caption="NOMBRE" dataField="nombre" dataType="string"> </dxi-column>
+          <dxi-column caption="VALOR" dataField="valor" dataType="string"> </dxi-column>
+          <dxi-column [width]="80" caption="ESTADO" dataField="estado" dataType="string" alignment="center" cellTemplate="pagesCellTemplateState"> </dxi-column>
+          <div *dxTemplate="let cell of 'pagesCellTemplateState'">      
+            <button type="submit" id="kt_sign_in_submit" class="{{cell.text== 'Activo' ? 'btn-activo' :  'btn-inactivo'}}">
+              <ng-container>
+                <span class="indicator-label">{{cell.text}}</span>
+              </ng-container>
+            </button>
+         
+          </div>
+          
+          <dxi-column [width]="90" caption="FEC. INICIO VIG." dataField="feciniciovig" dataType="string" alignment="center"> </dxi-column>
+          <dxi-column [width]="90" caption="FEC. FIN VIG." dataField="fecfinvig" dataType="string" alignment="center"> </dxi-column>  
+
+          <dxi-column [width]="90" caption="ACCIONES" dataField="Accion" dataType="string"  alignment="center"  cellTemplate="pagesCellTemplate">             
+          </dxi-column>
+          <div *dxTemplate="let cell of 'pagesCellTemplate'">      
+               
+          <button                
+            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+            (click)="editRow(cell.data)"
+          >
+            <span
+              [inlineSVG]="'./assets/media/icons/duotune/general/gen055.svg'"
+              class="svg-icon svg-icon-3"
+            ></span>
+          </button>
+          <button  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+          (click)="showMsjDeleteRow(cell.data,content)">
+            <span
+              [inlineSVG]="
+                './assets/media/icons/duotune/general/gen027.svg'
+              "
+              class="svg-icon svg-icon-3"
+            ></span>
+          </button>
+          </div>
+        
+       
+  
+          <dxo-paging [pageSize]="10"></dxo-paging>
+          <dxo-pager
+            [showPageSizeSelector]="true"
+            [allowedPageSizes]="[10]"
+          ></dxo-pager>
+        </dx-data-grid>
+        
+  
+    
+  
+  </div>
+</div>
+
+      
+    </div>
+      
+    </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Eliminar registro</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+	</div>
+	<div class="modal-body" style="text-align: center;">
+    <img src="./assets/media/modal-alert/interrogacion-img.png" width="55px;" height="55px" />
+		<p> {{this.msjAlert}} </p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-success" (click)="deleteRow(this.rutaAuxiliar)">SI</button>
+		<button type="button" class="btn btn-danger" (click)="c('Close click')">NO</button>
+	</div>
+</ng-template>
